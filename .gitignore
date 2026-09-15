@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+
+# Local config / secrets / data
+nmem-identity.toml
+.env
+
+# Model weights & blob store (never committed)
+*.onnx
+blobs/
+captures/
+*.wav
+*.jsonl
+
+# Datasets (public benchmarks are downloaded, never vendored)
+data/
+datasets/
+
+# Tooling
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv*/
+data/

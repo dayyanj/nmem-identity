@@ -1,0 +1,70 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nmem-identity"
+version = "0.1.0"
+description = "Self-supervised multi-modal person identity (voice + face) as an extension of nmem — an agent learns who it interacts with and recognises them over time, with no manual tagging."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "nmem" }]
+keywords = ["identity", "speaker-recognition", "face-recognition", "pgvector", "nmem"]
+
+# Core runtime: the store + matching layer. Deliberately light — no ML deps here, so a host that
+# only *calls* the matcher over HTTP (and embeds elsewhere) installs almost nothing.
+dependencies = [
+    "asyncpg>=0.29",
+    "numpy>=1.24",
+    "pydantic-settings>=2.0",
+]
+
+[project.optional-dependencies]
+# HTTP services (matcher + embed sidecars).
+serve = [
+    "fastapi>=0.110",
+    "uvicorn>=0.29",
+    "pydantic>=2",
+]
+# Face perception: SCRFD detect + landmark align + ArcFace embed. onnxruntime-gpu on a CUDA host,
+# onnxruntime on CPU — pick one; insightface pulls opencv + onnx model zoo.
+face = [
+    "insightface>=0.7.3",
+    "onnxruntime>=1.17",   # swap for onnxruntime-gpu on a CUDA host
+    "opencv-python-headless>=4.8",
+    "scikit-image>=0.21",
+]
+# Voice perception embedder (CAM++ / ECAPA style speaker embedding).
+voice = [
+    "onnxruntime>=1.17",
+    "soundfile>=0.12",
+    "scipy>=1.10",
+]
+# Text-style perception embedder (LUAR authorship / chat-writing style). LUAR ships custom modeling
+# code loaded via transformers' trust_remote_code; torch runs it (CPU or CUDA).
+text = [
+    "torch>=2.1",
+    "transformers>=4.40",
+]
+# Public-benchmark evaluation (LFW / IJB-C verification, ROC/EER, reliability diagrams).
+eval = [
+    "scikit-learn>=1.3",
+]
+dev = [
+    "pytest>=8",
+    "ruff>=0.4",
+]
+
+[project.scripts]
+nmem-identity = "nmem_identity.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+nmem_identity = ["store/schema.sql", "store/migrations/*.sql"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
