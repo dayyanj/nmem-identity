@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "nmem-identity"
-version = "0.1.0"
+version = "0.2.0"
 description = "Self-supervised multi-modal person identity (voice + face) as an extension of nmem — an agent learns who it interacts with and recognises them over time, with no manual tagging."
 readme = "README.md"
 requires-python = ">=3.10"

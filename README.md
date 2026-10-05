@@ -1,6 +1,8 @@
 # nmem-identity
 
-**Status: 0.2 — early, pre-1.0.** The store + matcher run wired into a live agent (Phase 0, voice); the API may still change. See the [changelog](CHANGELOG.md).
+> ⚠️ **Experimental — under active development.** This project is mid-build: APIs, schemas, and behaviour may change without notice, and it is not yet recommended for production use.
+
+**Status: 0.2 — experimental, pre-1.0.** The store + matcher run wired into a live agent (Phase 0, voice); the API may still change. See the [changelog](CHANGELOG.md).
 
 Self-supervised **multi-modal person identity** (voice + face) as an extension of
 [nmem](https://github.com/dayyanj/nmem). A host agent learns *who it is interacting with* — recognising people by
